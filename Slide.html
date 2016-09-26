@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body{padding:0;margin:0;  }
+        #div1{width:520px;height:280px;border:1px solid #000;margin:100px auto 0;padding:0;position:relative;overflow:hidden;}
+        #div1 span{display:block;width:100%;text-align:center;background:#000;opacity:0.6;filter:alpha(opacity=60);position:absolute;bottom:0px;color:#fff;}
+        #div1 input {width:80px;height:80px;background:#000;z-index:1;cursor:pointer;color:#fff;font-size:30px;opacity:0.3;filter:alpha(opacity=30);position:absolute;top:50%;margin-top:-40px;border-radiu:100px;}
+        #div1 input:hover{opacity:0.6;filter:alpha(opacity=60);}
+        #div1 input#prev{left:10px;}
+        #div1 input#next{right:10px;}
+        #ul1{padding:0;margin:0;position:absolute;left:0;top:0;}
+        li{width:520px;height:280px;list-style:none;float:left;}
+        img{display:block;vertical-align:top;}
+        #div1 p{width:100%;position:absolute;bottom:5px;left:0;z-index:1;text-align:center;}
+        #div1 p a{background:#ccc;padding:1px 9px;margin-left:5px;border-radius:100%;}
+        #div1 p a.active{ background:#F90;}
+    </style>
+    <script src="jquery-3.1.0.min.js" ></script>
+    <script>
+        $(function(){
+            var iWidth  = $('#ul1').find('li').width(),
+                iLen = $('#ul1').find('li').length,
+                num = 0,
+                iTimer = null;
+            $('#ul1').css('width',iWidth*iLen);
+            iTimer = setInterval(function(){
+                num++;
+                if(num==iLen){
+                    num=0;
+                };
+                 $('#ul1').animate({left:-num*iWidth});
+                 $('a').attr('class','');
+                 $('a').eq(num).attr('class','active');
+            },3000);
+            $('#prev').on('click',function(){
+                num--;
+                if(num<0){
+                    num=iLen-1;
+                };
+                $('#ul1').animate({left:-num*iWidth});
+                $('a').attr('class','');
+                $('a').eq(num).attr('class','active');
+            });
+            $('#next').on('click',function(){
+                num++;
+                if(num>iLen-1){
+                    num=0;
+                };
+                $('#ul1').animate({left:-num*iWidth});
+                $('a').attr('class','');
+                $('a').eq(num).attr('class','active');
+            })
+            $('a').on('click',function(){
+                num = $(this).index();
+                $('#ul1').animate({left:-num*iWidth});
+                $('a').attr('class','');
+                $('a').eq(num).attr('class','active');
+            });
+            $('#div1').hover(function(){
+                clearInterval(iTimer);
+            },function(){
+                iTimer;
+            })
+        });
+    </script>
+</head>
+<body>
+<div id="div1">
+    <input id="prev" type="button" value="<">
+    <input id="next" type="button" value=">">
+    <ul id="ul1">
+        <li><img src="imgs/1.jpg"/></li>
+        <li><img src="imgs/2.jpg"/></li>
+        <li><img src="imgs/3.jpg"/></li>
+        <li><img src="imgs/4.jpg"/></li>
+        <li><img src="imgs/5.jpg"/></li>
+    </ul>
+    <p>
+        <a class="active" href="#"></a>
+        <a href="#"></a>
+        <a href="#"></a>
+        <a href="#"></a>
+        <a href="#"></a>
+    </p>
+    <span></span>
+</div>
+</body>
+</html>
