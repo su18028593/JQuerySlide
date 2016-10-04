@@ -62,7 +62,15 @@
             $('#div1').hover(function(){
                 clearInterval(iTimer);
             },function(){
-                iTimer;
+                iTimer = setInterval( function(){
+                    num++;
+                    if(num==iLen){
+                        num=0;
+                    }
+                    $('#ul1').animate({left:-num*iWidth});
+                    $('a').attr('class','');
+                    $('a').eq(num).attr('class','active');
+                } ,3000)
             })
         });
     </script>
